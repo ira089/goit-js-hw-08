@@ -21,23 +21,28 @@ function onFormSubmit(evt) {
   evt.preventDefault();
   const email = refs.formLissen.elements.email.value;
   const message = refs.formLissen.elements.message.value;
-  const obj = {
-    email,
-    message,
-  };
-  console.log(obj);
-  evt.target.reset();
-  localStorage.removeItem('feedback-form-state');
+  if (message && email) {
+    const obj = {
+      email,
+      message,
+    };
+    console.log(obj);
+    evt.target.reset();
+    localStorage.removeItem('feedback-form-state');
+  } else {
+    alert('please fill out all fields of the form');
+  }
 }
 
 function onLoad() {
   const arrFromLS = loadFromLS(STORAGE_KEY);
-  // console.log(arrFromLS);
-
-  if (arrFromLS) {
+  console.log(arrFromLS.email);
+  console.log(arrFromLS.message);
+  if (arrFromLS.email) {
     refs.formLissen.elements.email.value = arrFromLS.email;
+  }
+  if (arrFromLS.message) {
     refs.formLissen.elements.message.value = arrFromLS.message;
   }
-  // console.log(refs.formLissen.elements);
 }
 onLoad();
