@@ -2,7 +2,8 @@ import throttle from 'lodash.throttle';
 import { loadFromLS } from './helpers';
 
 const STORAGE_KEY = 'feedback-form-state';
-const formData = {};
+const formData = loadFromLS(STORAGE_KEY) || {};
+// console.log(typ eof formData);
 const refs = {
   formLissen: document.querySelector('.feedback-form'),
 };
@@ -11,6 +12,8 @@ refs.formLissen.addEventListener('input', throttle(onFormInput, 500));
 refs.formLissen.addEventListener('submit', onFormSubmit);
 
 function onFormInput(evt) {
+  // console.log(formData);
+
   // console.log(evt.target.name);
   formData[evt.target.name] = evt.target.value;
   // console.log(formData);
@@ -35,14 +38,31 @@ function onFormSubmit(evt) {
 }
 
 function onLoad() {
+  emailFromLS();
+  messageFromLS();
+}
+onLoad();
+
+function emailFromLS() {
   const arrFromLS = loadFromLS(STORAGE_KEY);
-  console.log(arrFromLS.email);
-  console.log(arrFromLS.message);
+  // console.log(arrFromLS.email);
   if (arrFromLS.email) {
     refs.formLissen.elements.email.value = arrFromLS.email;
   }
+}
+
+function messageFromLS() {
+  const arrFromLS = loadFromLS(STORAGE_KEY);
+  // console.log(arrFromLS.message);
   if (arrFromLS.message) {
     refs.formLissen.elements.message.value = arrFromLS.message;
   }
 }
-onLoad();
+//общая функция
+// function nameFromLS(name) {
+//   const arrFromLS = loadFromLS(STORAGE_KEY);
+//   console.log(arrFromLS.name);
+//   if (arrFromLS.name) {
+//     refs.formLissen.elements.name.value = arrFromLS.name;
+//   }
+// }
