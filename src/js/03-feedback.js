@@ -32,6 +32,7 @@ function onFormSubmit(evt) {
     console.log(obj);
     evt.target.reset();
     localStorage.removeItem('feedback-form-state');
+    formData === {};
   } else {
     alert('please fill out all fields of the form');
   }
